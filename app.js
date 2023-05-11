@@ -1,65 +1,164 @@
-/* Функции высшего порядка
-Функция высшего порядка - это функция, которая принимает в качестве параметра
-или возвращает в качестве результата работу функцию.
-*/
+// Итерации в массивах
 
-/** callback */
-function add(a, b)
-{
-    return a + b;
+// forEach
+
+const score = [5, 10, 0, 15];
+for (const [i, el] of score.entries()) {
+    console.log(`Раунд ${i + 1}: ${el}`);
 }
 
-/** callback */
-function subtract(a, b)
-{
-    return a - b;
+score.forEach((el) => {
+    console.log(`Раунд: ${el}`);
+})
+
+console.log('---');
+
+const iterator = (scoreEl, i) => console.log(`Раунд ${i + 1}: ${scoreEl}`);
+score.forEach(iterator);
+
+// Внутри forEach не работает break
+
+// Map
+console.log('---- Map ----');
+
+// map возвращает новый массив
+
+const transactionsInUSD = [10, -7, 50, -10, 100];
+const transactionsInRUB = [];
+for (const transaction of transactionsInUSD) {
+    transactionsInRUB.push(transaction * 60);
+}
+console.log(transactionsInUSD);
+console.log(transactionsInRUB);
+
+console.log('----');
+
+const transactionsInRUB2 = transactionsInUSD
+    .map(transaction => transaction * 60);
+console.log(transactionsInRUB2);
+
+// Filter
+console.log('---- Filter ----');
+
+const operations = [100, -20, 7, -30, 50];
+
+const positiveOperations = [];
+for (const operation of operations) {
+    if (operation > 0) {
+        positiveOperations.push(operation);
+    }
 }
 
-/** callback */
-function pwr(a, b)
-{
-    return a ** b;
-}
+console.log(operations);
+console.log(positiveOperations);
 
-/** Функция высшего порядка */
-function calculate(a, b, fn)
-{
-    console.log(fn.name);
-    const res = fn(a, b);
-    return res;
-}
+console.log('----');
+const positiveOperations1 = operations.filter(operation => operation > 0);
+console.log(positiveOperations1);
 
-let result = calculate(3, 5, add);
+console.log('----');
+const positiveRubOperations = operations
+    .filter(operation => operation > 0)
+    .map(operation => operation * 60);
+console.log(positiveRubOperations);
+
+console.log('------- Упражнение -------');
+
+const prices = [[100, 200], [120, 100], [200, 350]];
+const result = prices
+    .map(prices => prices[1] - prices[0])
+    .filter(delta => delta > 0);
 console.log(result);
-result = calculate(3, 5, subtract);
-console.log(result);
-result = calculate(3, 5, pwr);
-console.log(result);
 
-// ---- Возврат функции ----
-console.log('---- Возврат функции ----');
-function power(pow)
- {
-     return function (num) {
-         return num ** pow;
-     }
- }
+// Reduce
+console.log('---- Reduce ----');
 
-const powerOfTwo = power(2);
-const powerOfThree = power(3);
-console.log(powerOfTwo(5));
-console.log(powerOfThree(5));
-console.log(power(5)(4));
+let balance = 0;
+for (const operation of operations) {
+    balance += operation;
+}
+console.log(balance);
 
-// ---- Упражнение "Стрелочные функции" ----
-console.log('---- Упражнение "Стрелочные функции" ----');
-const arrowPower = pow => num => num ** pow;
+console.log('----');
+const finalBalance = operations.reduce((acc, operation, i) => {
+    console.log(`${i}: acc = ${acc}, operation = ${operation}`);
+    return acc += operation;
+}, 0);
+console.log(`Итог: ${finalBalance}`);
 
-const arrowPowerOfTwo = arrowPower(2);
-const arrowPowerOfThree = arrowPower(3);
-console.log(arrowPowerOfTwo(5));
-console.log(arrowPowerOfThree(5));
-console.log(arrowPower(5)(4));
+console.log('----');
+const minElement = operations.reduce((acc, operation) => {
+    return acc < operation ? acc : operation;
+}, 0);
+console.log(operations);
+console.log(`Min: ${minElement}`);
 
-const cube = x => y => z => x * y * z;
-console.log(cube(2)(2)(2));
+console.log('------- Упражнение -------')
+const arr = [1, 4, 4, 10];
+
+const avg = arr.reduce((avg, elem, i) => {
+    const isLast = (i === arr.length - 1);
+    return !isLast ? avg + elem : (avg + elem) / arr.length;
+}, 0);
+console.log(`Avg = ${avg}`);
+
+// find и findIndex
+console.log('---- find и findIndex');
+arr.push(20);
+console.log(arr);
+// find возвращает ПЕРВЫЙ элемент массива, удовлетворяющий условию из колбэк-функции
+let elGT5 = arr.find(el => el > 5);
+console.log(elGT5);
+// findIndex возвращает индекс ПЕРВОГО элемента массива, удовлетворяющего условию из колбэк-функции
+let elGT5Index = arr.findIndex(el => el > 5);
+console.log(elGT5Index);
+
+// Упражнение - функция some
+console.log('---- Упражнение - функция some');
+
+function some(arr, elem) {
+    return elem === arr.find(el => el === elem);
+}
+
+for (const el of [10, 20, 5, 0]) {
+    console.log('' + el + ': ' + (some(arr, el) ? 'Да' : 'Нет'));
+}
+
+// или можно (нужно) так
+
+for (const el of [10, 20, 5, 0]) {
+    console.log('' + el + ': ' + (arr.some(elem => elem === el) ? 'Да' : 'Нет'));
+}
+for (const el of [10, 20, 5, 0]) {
+    console.log('' + el + ': ' + (arr.includes(el) ? 'Да' : 'Нет'));
+}
+
+// flat и flatMap
+console.log('---- flat и flatMap');
+// flat - делает массив плоским. Параметр - уровень вложенности
+const arNum = [[100, 200], [120, 80], [150, [300, 240]]];
+console.log(arNum);
+const res = arNum.flat(2);
+console.log(res);
+
+// flatMap - это аналог последовательно выполненных map() и flat()
+
+// sort()
+console.log('---- sort()');
+
+const users = ['Вася', 'Маша', 'Катя', 'Аня'];
+console.log(users);
+users.sort();
+console.log(users);
+
+const sum = [100, -300, -100, 50, 480];
+console.log(sum);
+sum.sort();
+console.log(sum);
+sum.sort((a, b) => a - b);
+console.log(sum);
+
+const arr3 = Array.from({length: 5}, (cur, i) => i + 1);
+console.log(arr3);
+
+
