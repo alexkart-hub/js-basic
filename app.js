@@ -1,182 +1,172 @@
-//Массивы
-const roles = ['admin', 'user', 'superuser'];
-console.log(roles.at(0));
-console.log(roles.at(-1)); // последний элемент массива
-const anyArray = new Array('Один', 'Два', 'Три');
-console.log(anyArray);
+// Циклы
 
-//Управление элементами массива
-const users = ['Аня', 'Вика', 'Катя'];
-console.log(users);
-users[2] = 'Кристина';
-console.log(users);
-users[3] = 'Никита';
-console.log(users);
-users[5] = 'Иван';
-console.log(users);
-console.log('Массив имеет ' + users.length + ' элементов');
+// Цикл for
+for (let i = 1; i < 5; i++) {
+    console.log(`Наш балланс ${i}$`);
+}
 
-// Поиск элементов массива
+const tasks = [];
+for (let i = 0; i < 10; i++) {
+    tasks[i] = `Задача ${i+1}`;
+}
 
-// indexOf
-const elemIndex = users.indexOf('Вика');
-console.log('Вика: ' + elemIndex);
-
-// include
-let inArray = users.includes('Катя');
-console.log(inArray ? 'Катя есть' : 'Кати нет');
-inArray = users.includes('Кристина');
-console.log(inArray ? 'Кристина есть' : 'Кристины нет');
-
-//Добавление элементов массива
-
-//push Добавляет элемент в конец массива; Возвращает длину измененного массива
-const len1 = users.push('Николай');
-console.log(users);
-console.log(len1);
-//unshift Добавляет элемент в начало массива; Возвращает длину измененного массива
-const len2 = users.unshift('Вася');
-console.log(users);
-console.log(len2);
-
-//Удаление элементов массива
-
-//pop Удаляет последний элемент массива; Возвращает удаленный элемент
-const elem1 = users.pop();
-console.log(elem1);
-console.log(users);
-
-//shift Удаляет первый элемент массива; Возвращает удаленный элемент
-const elem2 = users.shift();
-console.log(elem2);
-console.log(users);
-
-//slice, splice, concat, reverse
-console.log('slice, splice, concat, reverse');
-const arrExample = ['user', 'admin', 'manager', 'superuser'];
-console.log(arrExample);
-
-
-// slice(indexStart, indexEnd) - срез массива с элемента indexStart до indexEnd (не включает indexEnd)
-// не модифицирует исходный массив
-// Если indexEnd опущен, то до конца массива
-const exampleRes1 = arrExample.slice(2);
-console.log(exampleRes1); // ['manager', 'superuser']
-const exampleRes2 = arrExample.slice(2, 3);
-console.log(exampleRes2); // ['manager']
-const exampleRes3 = arrExample.slice(-1); // с конца
-console.log(exampleRes3); // ['superuser']
-const exampleRes4 = arrExample.slice(1, -1);
-console.log(exampleRes4); // с элемента с индексом 1 до 1-го элемента с конца (не включая)
-
-// splice(indexStart, count) - вырезает из исходного массива срез; возвращает вырезанный срез;
-// модифицирует исходный массив
-
-// reverse() - разворачивает массив. Модифицирует исходный массив
-arrExample.reverse();
-
-// concat(arr) - конкатенирует массив arr к исходному массиву; не модифицирует исходный массив.
-const arr = ['sysadmin', 'developer'];
-const exampleRes5 = arrExample.concat(arr);
-console.log(exampleRes5);
-
-// Из строки в массив и обратно
-console.log('Из строки в массив и обратно');
-
-// split(separator) - разбивает строку по разделителю separator
-const url = 'auth/user/login';
-console.log('Строка: ' + url);
-const exampleRes6 = url.split('/');
-console.log(exampleRes6);
-
-// join(separator) - собирает строку из элементов массива, разделяя их разделителем separator
-const exampleRes7 = exampleRes6.join(':');
-console.log(exampleRes7);
-
-const tasks = ['Задача 1'];
-
-function addTask(task = '')
-{
-    if (task.length > 0) {
-        tasks.push(task);
-        return true;
+for (let i = 0; i < tasks.length; i++) {
+    if (tasks[i] === 'Задача 3') {
+        continue;
     }
-    return false;
-}
-
-function deleteTask(task)
-{
-    const index = tasks.indexOf(task);
-    if (index >= 0) {
-        tasks.splice(index, 1);
-        return true;
+    if (tasks[i] === 'Задача 8') {
+        break;
     }
-    return false;
+    console.log(tasks[i]);
 }
 
-function prioritize(task)
-{
-    if (deleteTask(task)) {
-        tasks.unshift(task);
-        return true;
+const arrText = ['!', 'JS', 'люблю', 'Я'];
+let resStr = '';
+for (let i = 3; i >= 0; i--) {
+    resStr += arrText[i] + (i > 1 ? ' ' : '');
+}
+console.log(resStr);
+
+const arrResText = [];
+for (let i = 3; i >= 0; i--) {
+    arrResText.push(arrText[i]);
+}
+resStr = arrResText.join(' ');
+console.log(resStr);
+
+// Цикл while
+let i = 1;
+while (i < 5) {
+    console.log(`Вывод - ${i}`);
+    i++;
+}
+
+const arr = [1, 4, 8, 7];
+for (let i = 0; i < arr.length; i++) {
+    if (arr[i] > 5) {
+        break;
     }
-    return false;
+    console.log(arr[i]);
 }
 
-addTask('Задача 2');
-addTask('Задача 3');
-addTask('Задача 4');
-addTask('Задача 5');
-console.log(tasks);
-
-deleteTask('Задача 3');
-console.log(tasks);
-
-prioritize('Задача 4');
-console.log(tasks);
-
-// Деструктуризация
-function getData() {
-    return ['Александр', 48, 'Азов'];
+let ii = 0;
+while (arr[ii] <= 5 && ii < arr.length) {
+    console.log(arr[ii++]);
 }
 
-const name = getData()[0];
-const age = getData()[1];
-const city = getData()[2];
+// Цикл do while
 
-console.log(name, age, city);
+let j = 0;
+do {
+    console.log(j++);
+} while (j < 0)
 
-// это можно записать короче (аналог list в php)
+// Циклы for of и for in
+console.log('--- Циклы for of и for in ---')
+for (let element of arr) {
+    console.log(element);
+}
 
-const [name1, age1, city1] = getData(); // можно использовать _ для пропуска
-console.log(name1, age1, city1);
+console.log('-------');
 
-// Rest оператор
+for (let index in arr) {
+    console.log(index);
+}
 
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const [one, two, ...others] = data; //используется только в конце
-console.log(one, two, others);
+console.log('------- Упражнение -------');
 
-function parse_url(url)
+const operations = [1000, -700, 300, -500, 10000];
+const start = 100;
+
+function getBallans()
 {
-    const urlData = url.split('://');
-    const protocol = urlData[0];
-    const arUrl = urlData[1].split('/');
-    const domain = arUrl.shift();
+    let ballans = start;
+    for (let operation of operations) {
+        ballans += operation;
+    }
+    return ballans;
+}
+
+function checkOperationsMy() {
+    let ballans = start;
+    for (let operation of operations) {
+        ballans += operation;
+        if (ballans < 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function getAverage()
+{
+    let profit = 0;
+    let countProfit = 0;
+    let costs = 0;
+    let countCosts = 0;
+    for (const operation of operations) {
+        if (operation > 0) {
+            profit += operation;
+            countProfit++;
+        } else {
+            costs += operation;
+            countCosts++;
+        }
+    }
+    averageProfit = profit / (countProfit > 0 ? countProfit : 1);
+    averageCosts = costs / (countCosts > 0 ? countCosts : 1);
+    return [averageProfit, -averageCosts];
+}
+
+console.log(getBallans());
+console.log(checkOperationsMy());
+const [profit, costs] = getAverage();
+console.log(profit, costs);
+
+console.log('-------');
+function getBalance(arrayOfOperations, initialBalance = 0) {
+    let balance = initialBalance;
+    for (const element of arrayOfOperations) {
+        balance += element;
+    }
+    return balance;
+}
+
+function checkOperations(arrayOfOperations, initialBalance = 0)
+{
+    let balance = initialBalance;
+    let isOk = true;
+    for (const element of arrayOfOperations) {
+        balance += element;
+        if (balance < 0) {
+            isOk = false;
+            break;
+        }
+    }
+    return isOk;
+}
+
+function averageOperations(arrayOfOperations) {
+    let positiveCount = 0;
+    let negativeCount = 0;
+    let positiveSum = 0;
+    let negativeSum = 0;
+    for (const element of arrayOfOperations) {
+        if (element > 0) {
+            positiveCount++;
+            positiveSum += element;
+        }
+        if (element < 0) {
+            negativeCount++;
+            negativeSum += element;
+        }
+    }
     return [
-        protocol,
-        domain,
-        '/' + arUrl.join('/')
+        positiveSum / positiveCount,
+        negativeSum / negativeCount
     ];
 }
 
-console.log(parse_url('https://purpleschool.ru/course/javascript'));
-
-function getUrlParts(url)
-{
-    const [protocol, _ , host, ...arPath] = url.split('/');
-    const path = '/' + arPath.join('/');
-    return [protocol, host, path];
-}
-
-console.log(getUrlParts('https://purpleschool.ru/course/javascript'));
+console.log(getBalance(operations, start));
+console.log(checkOperations(operations, start));
+console.log(averageOperations(operations));
