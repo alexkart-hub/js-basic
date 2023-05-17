@@ -1,164 +1,153 @@
-// Итерации в массивах
+// Работа со строками
 
-// forEach
+// Базовые методы
 
-const score = [5, 10, 0, 15];
-for (const [i, el] of score.entries()) {
-    console.log(`Раунд ${i + 1}: ${el}`);
-}
+const userName = '🔥Вася Пупкина';
+console.log(userName[0]); // к строке можно обратиться как к массиву
+console.log(userName[1]);
+console.log(userName[0] + userName[1]);
+console.log(userName.charAt(2)); // аналог
+console.log('----- length -----');
+console.log(userName.length);
+console.log('----- indexOf -----');
+console.log(userName.indexOf('упс')); // -1, нет такой буквы
+console.log(userName.indexOf('уп')); // поиск символа, точнее, подстроки (первое вхождение)
+console.log(userName.indexOf('а')); //
+console.log('----- lastIndexOf -----');
+console.log(userName.lastIndexOf('а')); // (последнее вхождение)
+console.log('----- includes -----');
+console.log(userName.includes('уп')); // проверка вхождения подстроки
+console.log(userName.includes('упс')); //
+console.log('----- slice -----');
+console.log(userName.slice(7)); // срез сироки, начиная с какого индекса
+console.log(userName.slice(7, 10)); // срез сироки, начиная с какого индекса и до какого, не включая
+// Еще есть
+// .startsWith - проверяет, начинается ли строка с переданного символа
+// .endsWith - проверяет, заканчивается ли строка переданным символом
 
-score.forEach((el) => {
-    console.log(`Раунд: ${el}`);
-})
-
-console.log('---');
-
-const iterator = (scoreEl, i) => console.log(`Раунд ${i + 1}: ${scoreEl}`);
-score.forEach(iterator);
-
-// Внутри forEach не работает break
-
-// Map
-console.log('---- Map ----');
-
-// map возвращает новый массив
-
-const transactionsInUSD = [10, -7, 50, -10, 100];
-const transactionsInRUB = [];
-for (const transaction of transactionsInUSD) {
-    transactionsInRUB.push(transaction * 60);
-}
-console.log(transactionsInUSD);
-console.log(transactionsInRUB);
-
-console.log('----');
-
-const transactionsInRUB2 = transactionsInUSD
-    .map(transaction => transaction * 60);
-console.log(transactionsInRUB2);
-
-// Filter
-console.log('---- Filter ----');
-
-const operations = [100, -20, 7, -30, 50];
-
-const positiveOperations = [];
-for (const operation of operations) {
-    if (operation > 0) {
-        positiveOperations.push(operation);
-    }
-}
-
-console.log(operations);
-console.log(positiveOperations);
-
-console.log('----');
-const positiveOperations1 = operations.filter(operation => operation > 0);
-console.log(positiveOperations1);
-
-console.log('----');
-const positiveRubOperations = operations
-    .filter(operation => operation > 0)
-    .map(operation => operation * 60);
-console.log(positiveRubOperations);
-
-console.log('------- Упражнение -------');
-
-const prices = [[100, 200], [120, 100], [200, 350]];
-const result = prices
-    .map(prices => prices[1] - prices[0])
-    .filter(delta => delta > 0);
+// Упражнение - выделение имени
+console.log('==== Упражнение - выделение имени');
+const name = 'Вася aka Terminator Vinovator Пупкин';
+const firstSpace = name.indexOf(' ');
+const lastSpace = name.lastIndexOf(' ');
+const firstName = name.slice(0, firstSpace);
+const surname = name.slice(lastSpace + 1);
+const result = `${firstName} ${surname}`;
+console.log(name);
 console.log(result);
 
-// Reduce
-console.log('---- Reduce ----');
+// Преобразование строки
+console.log('==== Преобразование строки');
 
-let balance = 0;
-for (const operation of operations) {
-    balance += operation;
-}
-console.log(balance);
+const str = 'Василий Пупкин';
+console.log(str);
+console.log(str.toLowerCase());
+console.log(str.toUpperCase());
+console.log(str.replace('В', 'Б'));
+console.log(str.replace('и', 'ю'));
+console.log(str.replaceAll('и', 'ю'));
+console.log(str.replace(/и/, 'ю'));
+console.log(str.replace(/и/g, 'ю'));
 
-console.log('----');
-const finalBalance = operations.reduce((acc, operation, i) => {
-    console.log(`${i}: acc = ${acc}, operation = ${operation}`);
-    return acc += operation;
-}, 0);
-console.log(`Итог: ${finalBalance}`);
+const str1 = ' Василий Пупкин   \n';
+console.log('---- trim ----');
+console.log(str1.trim());
+console.log(str1.trimStart());
+console.log(str1.trimEnd());
 
-console.log('----');
-const minElement = operations.reduce((acc, operation) => {
-    return acc < operation ? acc : operation;
-}, 0);
-console.log(operations);
-console.log(`Min: ${minElement}`);
+// Упражнение - проверка номера
+console.log('==== Упражнение - проверка номера');
 
-console.log('------- Упражнение -------')
-const arr = [1, 4, 4, 10];
-
-const avg = arr.reduce((avg, elem, i) => {
-    const isLast = (i === arr.length - 1);
-    return !isLast ? avg + elem : (avg + elem) / arr.length;
-}, 0);
-console.log(`Avg = ${avg}`);
-
-// find и findIndex
-console.log('---- find и findIndex');
-arr.push(20);
-console.log(arr);
-// find возвращает ПЕРВЫЙ элемент массива, удовлетворяющий условию из колбэк-функции
-let elGT5 = arr.find(el => el > 5);
-console.log(elGT5);
-// findIndex возвращает индекс ПЕРВОГО элемента массива, удовлетворяющего условию из колбэк-функции
-let elGT5Index = arr.findIndex(el => el > 5);
-console.log(elGT5Index);
-
-// Упражнение - функция some
-console.log('---- Упражнение - функция some');
-
-function some(arr, elem) {
-    return elem === arr.find(el => el === elem);
+/**
+ * Проверяет, является ли переданная строка валидным номером телефона
+ * @param {string} phone
+ * @return {boolean}
+ */
+function validatePhone(phone) {
+    return checkNumber(clearString(phone));
 }
 
-for (const el of [10, 20, 5, 0]) {
-    console.log('' + el + ': ' + (some(arr, el) ? 'Да' : 'Нет'));
+/**
+ * Удаляет из переданной строки скобки, тире и пробелы;
+ * Меняет +7 на 8
+ * @param {string} str
+ * @return {string}
+ */
+function clearString(str) {
+    return str
+        .trim()
+        .replace('+7', '8')
+        .replace(/[\s()-]/g, '');
 }
 
-// или можно (нужно) так
-
-for (const el of [10, 20, 5, 0]) {
-    console.log('' + el + ': ' + (arr.some(elem => elem === el) ? 'Да' : 'Нет'));
+/**
+ * Проверяет, что в строке содержатся только числа
+ * @param str
+ * @return {boolean}
+ */
+function isStringContainOnlyNumbers(str) {
+    return str
+        .split('')
+        .reduce((acc, simbol) => !isNaN(+simbol) && acc, true);
 }
-for (const el of [10, 20, 5, 0]) {
-    console.log('' + el + ': ' + (arr.includes(el) ? 'Да' : 'Нет'));
+
+/**
+ * Проверяет, является ли символ, переданный вторым параметром,
+ * первым символом строки, переданной первым параметром
+ * @param str
+ * @param symbol
+ * @return {boolean}
+ */
+function isFirstSymbolEqual(str, symbol) {
+    return str.startsWith(String(symbol));
 }
 
-// flat и flatMap
-console.log('---- flat и flatMap');
-// flat - делает массив плоским. Параметр - уровень вложенности
-const arNum = [[100, 200], [120, 80], [150, [300, 240]]];
-console.log(arNum);
-const res = arNum.flat(2);
-console.log(res);
+/**
+ * Проверяет, равна ли длина строки, переданной первым параметром,
+ * числу, переданному вторым параметром
+ * @param {string} str
+ * @param {number} length
+ * @return {boolean}
+ */
+function isLengthEqual(str, length) {
+    return str.length === length;
+}
 
-// flatMap - это аналог последовательно выполненных map() и flat()
+/**
+ * Выполняет окончательную валидацию номера
+ * @param number
+ * @return {boolean}
+ */
+function checkNumber(number) {
+    return isStringContainOnlyNumbers(number)
+    && isFirstSymbolEqual(number, 8)
+    && isLengthEqual(number, 11)
+}
 
-// sort()
-console.log('---- sort()');
+const arPhones = [
+    '89103235356',
+    '+79103235356',
+    '+7(910)3235356',
+    '+7(910) 323-53-56',
+    '+7(910) 323-53-56 ',
+    '89103235',
+    '+7d910d323-53-56',
+    '9+7103235356',
+    '89103g35356',
+];
 
-const users = ['Вася', 'Маша', 'Катя', 'Аня'];
-console.log(users);
-users.sort();
-console.log(users);
+for (const phone of arPhones) {
+    console.log(`${phone}: ${validatePhone(phone) ? 'Valid' : 'Invalid'}`);
+}
 
-const sum = [100, -300, -100, 50, 480];
-console.log(sum);
-sum.sort();
-console.log(sum);
-sum.sort((a, b) => a - b);
-console.log(sum);
+// Строки и массивы
 
-const arr3 = Array.from({length: 5}, (cur, i) => i + 1);
-console.log(arr3);
+/**
+ ... Всё!!! Дальше конспект в тетради. Так быстрее, и проще искать.
+ Здесь только упражнения.
+ */
 
+const maskCard = card => card.slice(-4).padStart(card.length, '*');
+const card = '4737054723165935';
+console.log(maskCard(card));
 
