@@ -1,153 +1,191 @@
-// Работа со строками
+// Объекты
 
-// Базовые методы
-
-const userName = '🔥Вася Пупкина';
-console.log(userName[0]); // к строке можно обратиться как к массиву
-console.log(userName[1]);
-console.log(userName[0] + userName[1]);
-console.log(userName.charAt(2)); // аналог
-console.log('----- length -----');
-console.log(userName.length);
-console.log('----- indexOf -----');
-console.log(userName.indexOf('упс')); // -1, нет такой буквы
-console.log(userName.indexOf('уп')); // поиск символа, точнее, подстроки (первое вхождение)
-console.log(userName.indexOf('а')); //
-console.log('----- lastIndexOf -----');
-console.log(userName.lastIndexOf('а')); // (последнее вхождение)
-console.log('----- includes -----');
-console.log(userName.includes('уп')); // проверка вхождения подстроки
-console.log(userName.includes('упс')); //
-console.log('----- slice -----');
-console.log(userName.slice(7)); // срез сироки, начиная с какого индекса
-console.log(userName.slice(7, 10)); // срез сироки, начиная с какого индекса и до какого, не включая
-// Еще есть
-// .startsWith - проверяет, начинается ли строка с переданного символа
-// .endsWith - проверяет, заканчивается ли строка переданным символом
-
-// Упражнение - выделение имени
-console.log('==== Упражнение - выделение имени');
-const name = 'Вася aka Terminator Vinovator Пупкин';
-const firstSpace = name.indexOf(' ');
-const lastSpace = name.lastIndexOf(' ');
-const firstName = name.slice(0, firstSpace);
-const surname = name.slice(lastSpace + 1);
-const result = `${firstName} ${surname}`;
-console.log(name);
-console.log(result);
-
-// Преобразование строки
-console.log('==== Преобразование строки');
-
-const str = 'Василий Пупкин';
-console.log(str);
-console.log(str.toLowerCase());
-console.log(str.toUpperCase());
-console.log(str.replace('В', 'Б'));
-console.log(str.replace('и', 'ю'));
-console.log(str.replaceAll('и', 'ю'));
-console.log(str.replace(/и/, 'ю'));
-console.log(str.replace(/и/g, 'ю'));
-
-const str1 = ' Василий Пупкин   \n';
-console.log('---- trim ----');
-console.log(str1.trim());
-console.log(str1.trimStart());
-console.log(str1.trimEnd());
-
-// Упражнение - проверка номера
-console.log('==== Упражнение - проверка номера');
-
-/**
- * Проверяет, является ли переданная строка валидным номером телефона
- * @param {string} phone
- * @return {boolean}
- */
-function validatePhone(phone) {
-    return checkNumber(clearString(phone));
-}
-
-/**
- * Удаляет из переданной строки скобки, тире и пробелы;
- * Меняет +7 на 8
- * @param {string} str
- * @return {string}
- */
-function clearString(str) {
-    return str
-        .trim()
-        .replace('+7', '8')
-        .replace(/[\s()-]/g, '');
-}
-
-/**
- * Проверяет, что в строке содержатся только числа
- * @param str
- * @return {boolean}
- */
-function isStringContainOnlyNumbers(str) {
-    return str
-        .split('')
-        .reduce((acc, simbol) => !isNaN(+simbol) && acc, true);
-}
-
-/**
- * Проверяет, является ли символ, переданный вторым параметром,
- * первым символом строки, переданной первым параметром
- * @param str
- * @param symbol
- * @return {boolean}
- */
-function isFirstSymbolEqual(str, symbol) {
-    return str.startsWith(String(symbol));
-}
-
-/**
- * Проверяет, равна ли длина строки, переданной первым параметром,
- * числу, переданному вторым параметром
- * @param {string} str
- * @param {number} length
- * @return {boolean}
- */
-function isLengthEqual(str, length) {
-    return str.length === length;
-}
-
-/**
- * Выполняет окончательную валидацию номера
- * @param number
- * @return {boolean}
- */
-function checkNumber(number) {
-    return isStringContainOnlyNumbers(number)
-    && isFirstSymbolEqual(number, 8)
-    && isLengthEqual(number, 11)
-}
-
-const arPhones = [
-    '89103235356',
-    '+79103235356',
-    '+7(910)3235356',
-    '+7(910) 323-53-56',
-    '+7(910) 323-53-56 ',
-    '89103235',
-    '+7d910d323-53-56',
-    '9+7103235356',
-    '89103g35356',
+const users = [
+    {name: 'Вася', age: 30},
+    {name: 'Катя', age: 18},
+    {name: 'Аня', age: 40},
+    {name: 'Петя', age: 25},
 ];
 
-for (const phone of arPhones) {
-    console.log(`${phone}: ${validatePhone(phone) ? 'Valid' : 'Invalid'}`);
+function sortUsers(users, asc = true) {
+    return users.sort((user1, user2) => asc ? user1.age - user2.age : user2.age - user1.age);
 }
 
-// Строки и массивы
+console.log(sortUsers(users));
 
-/**
- ... Всё!!! Дальше конспект в тетради. Так быстрее, и проще искать.
- Здесь только упражнения.
- */
+// ===================================
 
-const maskCard = card => card.slice(-4).padStart(card.length, '*');
-const card = '4737054723165935';
-console.log(maskCard(card));
+const users1 = [
+    {
+        name: 'Вася',
+        surname: 'Пупкин',
+        age: 30,
+        skills: ['Разработка', 'DevOps']
+    },
+    {
+        name: 'Катя',
+        surname: 'Белова',
+        age: 18,
+        skills: ['Дизайн']
+    },
+];
 
+function getNewUsers(users) {
+    return users.map(user => {
+        return {
+            fullName: `${user.name} ${user.surname}`,
+            skillNum: user.skills.length
+        };
+    });
+}
+
+console.log(getNewUsers(users1));
+
+const user = {
+    name: 'Вася',
+    surname: 'Пупкин',
+    age: 24,
+    fullName: function () {
+        return `${this.name} ${this.surname}`
+    }
+}
+console.log(user.fullName());
+
+
+// Кошелек (wallet)
+console.log('==== Кошелек (wallet) ====');
+const wallet = {
+    balance: 0,
+    operations: [],
+    in: function (reason, sum) {
+        this.balance += sum;
+        this.operations.push({
+            reason,
+            sum
+        });
+        return true;
+    },
+    out: function (reason, sum) {
+        if (sum > this.balance) {
+            return false;
+        }
+        this.balance -= sum;
+        this.operations.push({
+            reason,
+            sum: -sum
+        });
+        return true;
+    },
+    getCountOperations: function () {
+        return this.operations.length;
+    }
+};
+
+console.log(wallet.in('З/п', 40000));
+console.log(wallet.out('Квартплата', 4200));
+console.log(wallet.out('Инструменты', 10800));
+console.log(wallet.out('Еда', 3500));
+console.log(wallet.out('Связь', 2800));
+console.log(wallet.out('Машина', 1200000));
+console.log(wallet.getCountOperations());
+console.log(wallet);
+
+const cities = {
+    msk: {
+        temp: 25,
+        area: 2500
+    },
+    spb: {
+        temp: 20,
+        area: 1740
+    }
+};
+
+let tempSum = 0;
+const count = Object.keys(cities).length;
+for (const city of Object.values(cities)) {
+    tempSum += city.temp;
+}
+console.log(tempSum / count);
+
+const {msk, ...otherCities} = cities;
+console.log(msk);
+console.log(otherCities);
+
+// аналог array_merge
+const newObj = {
+    ...wallet,
+    ...otherCities,
+    ...user
+};
+
+console.log(newObj);
+
+// Упражнение
+console.log('==== Упражнение ====');
+
+const warehouse = {
+    goods: [],
+    findGoodById: function (id) {
+        return this.goods.find(good => good.id === id) ?? false;
+    },
+    addGood: function (good) {
+        if (typeof good !== 'object' || !Object.keys(good).includes('id')) {
+            return 'Некорректные данные!';
+        }
+        if (this.findGoodById(good.id)) {
+            return `Товар с id = ${good.id} уже есть!`;
+        }
+        this.goods.push(good);
+        return `Добавлен товар с id = ${good.id}`;
+    },
+    getWeightKg: function (id = 0) {
+        if (id > 0) {
+            const good = this.findGoodById(id);
+            return good ?
+                good.weight?.kg ? `Вес товара с id = ${id} равен ${good.weight?.kg} кг` : `У товара с id = ${id} нет веса!` :
+                `Нет товара c id = ${id}!`;
+        } else {
+            let weightSum = 0;
+            for (const good of this.goods) {
+                weightSum += good.weight?.kg;
+            }
+            return `Общий вес всех товаров ${weightSum} кг.`;
+        }
+    }
+}
+
+// товары
+
+const car = {
+    id: 1,
+    weight: {
+        kg: 1000
+    },
+    brand: 'Ford'
+};
+
+const chair = {
+    id: 2,
+    weight: {
+        kg: 2
+    }
+}
+
+const paper = {
+    id: 3,
+    color: 'red'
+}
+
+console.log(warehouse.findGoodById(1));
+console.log(warehouse.addGood(1));
+console.log(warehouse.addGood(car));
+console.log(warehouse.addGood(chair));
+console.log(warehouse.addGood(chair));
+console.log(warehouse.getWeightKg());
+console.log(warehouse.getWeightKg(1));
+console.log(warehouse.getWeightKg(2));
+console.log(warehouse.getWeightKg(3));
+console.log(warehouse.addGood(paper));
+console.log(warehouse.getWeightKg(3));
+console.log(warehouse.findGoodById(1));
