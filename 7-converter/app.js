@@ -13,9 +13,12 @@ function currencyConverter(sum, currencyFrom, currencyTo) {
         return null;
     }
 
-    const result = sum / getCourse(currencyTo) * getCourse(currencyFrom);
+    const currencies = getCurrenciesData();
 
-    return prepareResult(sum, result, currencyFrom, currencyTo);
+    const result = sum / currencies[currencyTo].course * currencies[currencyFrom].course;
+
+    return `${sum} ${currencies[currencyFrom].title} -> ` +
+        `${result.toFixed(2)} ${currencies[currencyTo].title}`;
 }
 
 /**
@@ -26,11 +29,10 @@ function currencyConverter(sum, currencyFrom, currencyTo) {
  * @return boolean
  */
 function checkData(sum, currencyFrom, currencyTo) {
-    const [arSupportedCurrencies] = getCurrenciesData();
-    return typeof sum === 'number'
-        && sum > 0
-        && arSupportedCurrencies.includes(currencyFrom)
-        && arSupportedCurrencies.includes(currencyTo);
+    const currencies = getCurrenciesData();
+    return sum > 0
+        && Object.keys(currencies).includes(currencyFrom)
+        && Object.keys(currencies).includes(currencyTo);
 }
 
 /**
@@ -38,53 +40,24 @@ function checkData(sum, currencyFrom, currencyTo) {
  * @return array
  */
 function getCurrenciesData() {
-    return [
-        ['rub', 'usd', 'eur', 'new'],
-        [1, 60, 70, 5],
-        ['руб', '$', 'EUR', 'нов']
-    ]
-}
-
-/**
- * Возвращает индекс валюты
- * @param currency - код валюты
- * @return number
- */
-function getIndex(currency) {
-    const [currencies] = getCurrenciesData();
-    return currencies.indexOf(currency);
-}
-
-/**
- * Возвращает курс валюты
- * @param currency - код валюты
- * @return number
- */
-function getCourse(currency) {
-    const [, courses] = getCurrenciesData();
-    return courses[getIndex(currency)];
-}
-
-/**
- * Возвращает название валюты для подстановки в строку
- * @param currency - код валюты
- * @return string
- */
-function getTitle(currency) {
-    const [, , titles] = getCurrenciesData();
-    return titles[getIndex(currency)];
-}
-
-/**
- * Возвращает результирующую строку для вывода в консоль
- * @param sumFrom - сумма, которую конвертируем
- * @param sumTo - итоговая сумма
- * @param currencyFrom - код валюты, из которой конвертируем
- * @param currencyTo - код валюты, в которую конвертируем
- * @return string
- */
-function prepareResult(sumFrom, sumTo, currencyFrom, currencyTo) {
-    return `${sumFrom} ${getTitle(currencyFrom)} -> ${sumTo.toFixed(2)} ${getTitle(currencyTo)}`;
+    return {
+        rub: {
+            course: 1,
+            title: 'руб'
+        },
+        usd: {
+            course: 60,
+            title: '$'
+        },
+        eur: {
+            course: 70,
+            title: 'EUR'
+        },
+        new: {
+            course: 5,
+            title: 'нов'
+        }
+    };
 }
 
 console.log(currencyConverter(1000, 'usd', 'rub'));

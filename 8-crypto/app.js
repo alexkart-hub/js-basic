@@ -37,8 +37,7 @@ function check(checkedStr, str) {
  * @return array
  */
 function getKey(len, uncrypt = false) {
-    const key = [7, 3, 9, 1, 4, 5, 8, 6, 0, 2];
-    const uncryptKey = getUncryptKey(key, len);
+    const uncryptKey = getUncryptKey(len);
     if (uncrypt) {
         return uncryptKey;
     }
@@ -47,16 +46,15 @@ function getKey(len, uncrypt = false) {
 
 /**
  * Генерит ключ для дешифровки
- * @param {Array} key
  * @param {number} len - длина строки
  * @return array
  */
-function getUncryptKey(key, len)
-{
+function getUncryptKey(len) {
+    const key = [7, 3, 9, 1, 4, 5, 8, 6, 0, 2];
     const result = prepareUncryptKeyStart(key, len);
     const dec = len - len % 10;
     let count = 0;
-    for (const index in key) {
+    for (const index of Object.keys(key)) {
         if (key[index] >= len % 10) {
             continue;
         }
@@ -76,8 +74,7 @@ function getUncryptKey(key, len)
  * @param {number} len
  * @return array
  */
-function prepareUncryptKeyStart(key, len)
-{
+function prepareUncryptKeyStart(key, len) {
     const result = [];
     if (len >= 10) {
         for (let i = 0; i < (len - len % 10) / 10; i++) {
@@ -94,10 +91,9 @@ function prepareUncryptKeyStart(key, len)
  * @param {Array} uncryptKey - ключ для расшифровки
  * @return array
  */
-function getCryptKey(uncryptKey)
-{
+function getCryptKey(uncryptKey) {
     const result = [];
-    for (const index in uncryptKey) {
+    for (const index of Object.keys(uncryptKey)) {
         result[uncryptKey[index]] = +index;
     }
     return result;
