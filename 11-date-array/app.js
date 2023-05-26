@@ -25,7 +25,7 @@ function getDates(arr) {
  */
 function splitDate(date) {
     let [month, day, year] = date.split('/');
-    if (typeof year === 'undefined') {
+    if (!year) {
         [day, month, year] = date.split('-');
     }
     return [day, month, year];
@@ -43,7 +43,7 @@ function isNotDate(day, month, year) {
     month = +month;
     year = +year;
     return (
-        day !== day || month !== month || year !== year ||
+        isNaN(day) || isNaN(month) || isNaN(year) ||
         day > 31 || day < 1 ||
         month > 12 || month < 1 ||
         year > 2023 || year < 1900 ||

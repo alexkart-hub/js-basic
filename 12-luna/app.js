@@ -7,40 +7,19 @@
  * @return {boolean}
  */
 function checkCard(card) {
-    const arrCard = getClearCardArray(card);
-    return isCorrect(arrCard) && checkCardLuna(arrCard);
-}
+    const clearCard = card
+        .trim()
+        .replaceAll('-', '');
 
-/**
- * Удаляет тире из номера карты
- * @param {string} card
- * @return {array}
- */
-function getClearCardArray(card) {
-    return card
-        .replaceAll('-', '')
-        .split('');
-}
-
-/**
- * Проверяет, что все символы номера карты являются числами
- * @param {array} card
- * @return {boolean}
- */
-function isCorrect(card) {
-    return card.reduce((acc, num) => !isNaN(+num) && acc, true);
-}
-
-/**
- * Проверяет номер карты по алгоритму Луна
- * @param {array} card
- * @return {boolean}
- */
-function checkCardLuna(card) {
-    return card.reduce((acc, num, index) => {
-            num = index % 2 === 0 ? +num * 2 : +num;
-            return acc += num < 10 ? num : num - 9;
-        }, 0) % 10 === 0;
+    if (clearCard.length !== 16) {
+        return false;
+    }
+    return clearCard
+        .split('')
+        .reduce((acc, num, index) => {
+        num = !(index % 2) ? +num * 2 : +num;
+        return acc += num < 10 ? num : num - 9;
+    }, 0) % 10 === 0;
 }
 
 /**
