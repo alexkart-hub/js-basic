@@ -8,7 +8,7 @@
  * @return string
  */
 function crypto(str, uncrypt = false) {
-    const key = getKey(str.length, uncrypt);
+    const key = uncrypt ? getUncryptKey(str.length) : getCryptKey(str.length);
 
     const arStr = str.split('');
     const arStrNew = arStr.map((_, index) => {
@@ -28,20 +28,6 @@ function crypto(str, uncrypt = false) {
  */
 function check(checkedStr, str) {
     return crypto(checkedStr, true) === str;
-}
-
-/**
- * Возвращает ключ для шифрования или дешифровки (если передан параметр uncrypt = true)
- * @param {number} len - длина строки
- * @param {boolean} uncrypt
- * @return array
- */
-function getKey(len, uncrypt = false) {
-    const uncryptKey = getUncryptKey(len);
-    if (uncrypt) {
-        return uncryptKey;
-    }
-    return getCryptKey(uncryptKey);
 }
 
 /**
@@ -88,12 +74,12 @@ function prepareUncryptKeyStart(key, len) {
 
 /**
  * Преобразовывает ключ для расшифровки в ключ для шифрования
- * @param {Array} uncryptKey - ключ для расшифровки
+ * @param {number} len
  * @return array
  */
-function getCryptKey(uncryptKey) {
+function getCryptKey(len) {
     const result = [];
-    for (const index of Object.keys(uncryptKey)) {
+    for (const index of Object.keys(getUncryptKey(len))) {
         result[uncryptKey[index]] = +index;
     }
     return result;
