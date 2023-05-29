@@ -1,20 +1,25 @@
-'use strict';
+// Scope и this
+// Упражнение - объект в объекте
 
-const user = {
-    name: 'Вася'
+const company = {
+    name: 'ООО Агро',
+    employees: [
+        {
+            name: 'Света',
+            getName: function () {
+                return this.name
+            }
+        }
+    ],
+    ceo: {
+        name: 'Вася'
+    },
+    getName: function () {
+        return this.name;
+    },
 };
-const user1 = user;
-user1.name = 'Петя';
 
-const user2 = Object.assign({}, user);
-user2.name = 'Саша';
-
-const user3 = {
-    ...user
-};
-user3.name = 'Миша';
-
-console.log(user);
-console.log(user1);
-console.log(user2);
-console.log(user3);
+console.log(company.getName());
+company.ceo.getName = company.getName;
+console.log(company.ceo.getName());
+console.log(company.employees.map(staff => staff.getName()));
