@@ -27,9 +27,7 @@ function currencyConverter(sum, currencyFrom, currencyTo) {
             title: 'нов'
         }
     };
-    if (!(sum > 0
-        && Object.keys(currencies).includes(currencyFrom)
-        && Object.keys(currencies).includes(currencyTo))) {
+    if (sum <= 0 || !currencies[currencyFrom] || !currencies[currencyTo]) {
         return null;
     }
 
@@ -41,6 +39,7 @@ function currencyConverter(sum, currencyFrom, currencyTo) {
 
 
 console.log(currencyConverter(1000, 'usd', 'rub'));
+console.log(currencyConverter(-1000, 'usd', 'rub'));
 console.log(currencyConverter(1000, 'rub', 'eur'));
 console.log(currencyConverter(1000, 'usd', 'eur'));
 console.log(currencyConverter(1000, 'new', 'rub'));
