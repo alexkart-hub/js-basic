@@ -1,11 +1,15 @@
-// Упражнение - получение DOM элементов
+// Добавление html на лету
 'use strict';
 
-const elem1 = document.querySelectorAll('.one')[0].innerText;
-const elem2 = document.getElementsByClassName('one')[1].innerText;
-const elem3 = document.querySelector('#two').innerText;
-const elem4 = document.querySelector('[user-id="4"]').innerText;
-console.log(elem1);
-console.log(elem2);
-console.log(elem3);
-console.log(elem4);
+const panel = document.createElement('div');
+panel.classList.add('panel');
+panel.innerText = document.querySelector('.panel').innerText;
+
+const button = document.createElement('button');
+button.setAttribute('user-id', 1);
+button.classList.add('button');
+button.innerText = 'Новая кнопка';
+console.log(button);
+
+document.querySelector('.test').appendChild(panel);
+document.querySelector('.test').appendChild(button);
