@@ -1,43 +1,11 @@
-// Document Object Model (DOM)
+// Упражнение - получение DOM элементов
 'use strict';
 
-const panelText = document.querySelector('.panel').innerText;
-console.log(panelText);
-document.querySelector('.panel').innerText = 'New text';
-document.querySelector('.input').value = 'Text';
-
-// document.querySelector('.button').addEventListener('click', function () {
-//     const input = document.querySelector('.input').value;
-//     if (!input) {
-//         return;
-//     }
-//     document.querySelector('.panel').innerText = input;
-//     document.querySelector('.input').value = '';
-// });
-
-function changeClick() {
-    const input = document.querySelector('.input').value;
-    if (!input) {
-        return;
-    }
-    document.querySelector('.panel').innerText = input;
-    document.querySelector('.input').value = '';
-    // document.querySelector('.notification').style.display = 'block';
-    // document.querySelector('.notification').classList.add('notification_active');
-    // document.querySelector('.notification').classList.remove('notification_hidden');
-    console.log(document.querySelector('.notification').getAttribute('class'));
-   document.querySelector('.notification').setAttribute('class', 'notification notification_active');
-}
-
-// document.querySelector('.input').addEventListener('keydown', (e) => {
-//     console.log(e);
-//     if (e.key === 'Enter') {
-//         changeClick();
-//     }
-// });
-
-function changeInput(e) {
-    if (e.code === 'Enter' || e.key === 'Enter') {
-        changeClick();
-    }
-}
+const elem1 = document.querySelectorAll('.one')[0].innerText;
+const elem2 = document.getElementsByClassName('one')[1].innerText;
+const elem3 = document.querySelector('#two').innerText;
+const elem4 = document.querySelector('[user-id="4"]').innerText;
+console.log(elem1);
+console.log(elem2);
+console.log(elem3);
+console.log(elem4);
