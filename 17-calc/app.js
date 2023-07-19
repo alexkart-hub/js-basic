@@ -1,13 +1,15 @@
 // Домашнее задание - Document Object Model
 // 9.06.2023
 
+const body = document.querySelector('body');
+
 // Создаю и добавляю на страницу input-ы
 for (let i = 1; i <= 2; i++) {
     let input = document.createElement('input');
     input.setAttribute('type', 'number');
     input.setAttribute('id', `${i}`);
     input.value = '0';
-    document.querySelector('body').appendChild(input);
+    body.appendChild(input);
 }
 
 // Кнопки операций оберну в div, чтобы они отображались ниже инпутов
@@ -34,7 +36,7 @@ for (const operation of Object.keys(operations)) {
 }
 
 // Добавляю div с кнопочками операций на страницу
-document.querySelector('body').appendChild(blockOperations);
+body.appendChild(blockOperations);
 
 // Создаю div, в котором будет отображаться результат
 const result = document.createElement('div');
@@ -42,7 +44,7 @@ result.style.color = 'white';
 result.classList.add('result');
 
 // Добавляю div.result на страницу
-document.querySelector('body').appendChild(result);
+body.appendChild(result);
 
 /**
  * Обработчик нажатия на кнопку операции
