@@ -28,7 +28,7 @@ const operations = {
 // Складываю их в div.operations
 for (const operation of Object.keys(operations)) {
     let button = document.createElement('button');
-    button.setAttribute('operation', operation);
+    button.dataset.operation = operation;
     button.setAttribute('onclick', 'calculate(event)');
     button.classList.add('button-operation');
     button.innerText = operations[operation];
@@ -51,7 +51,7 @@ body.appendChild(result);
  * @param e
  */
 function calculate(e) {
-    const operation = e.target.getAttribute('operation');
+    const operation = e.target.dataset.operation;
     const num1 = +document.getElementById('1').value;
     const num2 = +document.getElementById('2').value;
 
